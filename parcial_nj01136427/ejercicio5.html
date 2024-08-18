@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tareas</title>
+  <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const Tarea = ({ tarea, eliminarTarea }) => {
+      return React.createElement("li", null, tarea);
+    };
+
+    const ListaTareas = () => {
+      const [tareas, setTareas] = React.useState([]);
+      const [nuevaTarea, setNuevaTarea] = React.useState('');
+
+      const agregarTarea = () => {
+        if (nuevaTarea.trim() !== '') {
+          setTareas([...tareas, nuevaTarea]);
+          setNuevaTarea('');
+        }
+      };
+
+      const eliminarTarea = (tarea) => {
+        setTareas(tareas.filter((t) => t !== tarea));
+      };
+
+      return React.createElement(
+        "div",
+        null,
+        React.createElement("h2", null, "Lista de tareas"),
+        React.createElement(
+          "ul",
+          null,
+          tareas.map((tarea) => React.createElement(Tarea, { key: tarea, tarea: tarea, eliminarTarea: eliminarTarea }))
+        ),
+        React.createElement("input", {
+          type: "text",
+          value: nuevaTarea,
+          onChange: (e) => setNuevaTarea(e.target.value),
+          placeholder: "Ingrese una nueva tarea"
+        }),
+        React.createElement(
+          "button",
+          { onClick: agregarTarea },
+          "Agregar tarea"
+        )
+      );
+    };
+
+    ReactDOM.render(React.createElement(ListaTareas, null), document.getElementById('root'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mensaje</title>
+  <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const Mensaje = () => {
+      const [mensaje, setMensaje] = React.useState('La variable no ha cambiado');
+      const [variable, setVariable] = React.useState(0);
+
+      React.useEffect(() => {
+        if (variable > 0) {
+          setMensaje(`El valor de la variable ha cambiado a ${variable}`);
+        }
+      }, [variable]);
+
+      const handleCambiarVariable = () => {
+        setVariable(variable + 1);
+      };
+
+      return React.createElement(
+        "div",
+        null,
+        React.createElement("p", null, mensaje),
+        React.createElement(
+          "button",
+          { onClick: handleCambiarVariable },
+          "Cambiar variable"
+        ),
+        React.createElement("p", null, `Valor de la variable: ${variable}`)
+      );
+    };
+
+    ReactDOM.render(React.createElement(Mensaje, null), document.getElementById('root'));
+  </script>
+</body>
+</html>
